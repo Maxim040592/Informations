@@ -1,0 +1,13 @@
+***Lessons 29 - Acrive Record****
+1. По настройке нужных файлов смотреть ungit по каждому шагу
+
+**КОМАНДЫ rake***
+rake db:create_migration NAME=название служебной таблицы миграции(например client_migratios)
+rake db:migrate - запуск миграции
+
+***УСТАНОВКА + НАСТРОЙКА RAILS***
+ 1 gem install rails
+ 2 rails new _название приложения_
+ 2 Поместить файл webpacker.yml в папку _название приложения_/config (можно скачать на github)
+ 3 прописать в консоли - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p  (необходимо для разграничения отслеживания изменений в каталогах)
+
