@@ -1,5 +1,5 @@
 ***Работа с приложением в Rails***
- * После создания нового приложения необходимо создать контроллер и модель приложения
+ ***После создания нового приложения необходимо создать контроллер и модель приложения
    - rails generate( либо просто g) controller arcticles ( вместо articles может быть что угодно )
    	Далее нужно перейти в контроллер и прописать 
    	def new 
@@ -7,11 +7,82 @@
    	
    - rails generate( либо просто g) home index (index - это action т.е страница отображения которую нужно создать в кталоге view под именем index.html.erb и уже в ней будет содержаться представление страницы
    
-   - rails g module Article ( и сразу перечисляются поля таблицы) title :string text :text ( т.е создасться модель и миграция)
+   - rails generate( либо просто g) home (создастся контроллер home в данном случае без action index значит по умолчанию нужно будет создать action в контроллере в зависимости от того какой прописан маршурут в файле ниже routes.rb (resource или resources) - см. рисунок !маршруты Rails! в данном репозитории)
+   
+   - rails g model Article title :string text :text  ( и сразу перечисляются поля таблицы т.е создасться модель и миграция)
    	Далее необходимо запустить миграцию rake db:migrate
    
-  *Правка файла routes.rb
+  ***Правка файла routes.rb
    - для того чтобы сделать начальную страницу созданным action - index необходимо написать
-   	get '/' => 'home#index'
+   	get '/' => 'home#index' - статичная страница т.к для контроллера home указана только страница index (см. создание статичных страниц)
    - для опредления маршрута по url articles/new ( относится к созданному контроллеру articles) необходимо прописать
    	resources :articles
+      resource :contacts, only: [:new, :create], path_names: { :new => ''}  # маршруты только на отображение и отрпавку (т.е new отображение, create отправка)
+  
+ ***Создание статичных страниц
+   1 создается контроллер
+   2 внутри прописываются нужные страницы (например def about end; def contact end )
+   3 в файле routes.rb прописываем (get 'terms' => 'controller_name#about' 
+                                    get 'about' => 'controller_name#contact' )
+   4 создаем представления для каждой стр
+ 
+ ***Каталог controllers
+  ***Структура файла контроллера (структура маршрутов можно посмотреть в файле картинки маршруты Rails в данном репозитории)
+      class ArticlesController < ApplicationController
+        def index #отображение списка
+        end
+        
+        def show #показ страницы
+        end
+        
+        def new #создание страницы (GET запрос)
+        end
+        
+        def create #отправка страницы (POST запрос)
+        end
+
+        def edit #редактирование страницы (GET запрос)
+        end
+
+        def update #редактирование страницы (PUT/PATCH запрос)
+        end
+
+        private
+        #разрешение на передачу параметров
+        def article_params
+          params.require(:article).permit(:title, :text)
+        end
+      end
+    
+  ***Команды Rails
+      - render action: 'edit' - перенаправит на страницу edit
+      - redirect_to @article - перенаправление по нужному пути в REST, где @article это @article = Article.new(article_params) т.е сущность полученнная с переданными параметрами из мтода article_params описанный в private
+      - @article.save - сохранение в БД
+      - @article.update(article_params) - обновление в БД по переданым параметрам из private метода article_params
+      - <%= link_to 'Show_article', article_path(article)%> 
+            #создаст ссылку 'Show_article' с переходом на страницу arcticles(статьи) по ее id. 
+            #где article это <% @articles.each do |article|%> т.е элемент массива
+            # @articles - переменная содержащая массив Модели Article т.е  @articles = Article.all (код из action index)
+      - <%= link_to 'Edit_article', edit_article_path(article)%>
+            #создаст ссылку 'Edit_article' с переходом на страницу arcticles(статьи)/id/edit по ее id. 
+            #где article это <% @articles.each do |article|%> т.е элемент массива
+            # @articles - переменная содержащая массив Модели Article т.е  @articles = Article.all (код из action index)
+      
+ ***Каталог views(представления - .html.erb)
+ ***предстваление edit.html.erb
+      <%= form_for :article, url: article_path(@article), method: :put do |f| %> 
+      #т.е article_path - переменная маршрута контроллера(т.е /edit) 
+      #@article - глобальная переменная которая прописана в action edit т.е @article = Article.find(params[:id])
+      #method: :put - грубо говоря хэш где method: - ключ :put - значение. Данный метод создается раилсом для страницы /update (см. рис  "маршруты Rails" в данном репозитории)
+      #т.е браузер не знает такой метод "PUT" поэтому Rails его создает путем создания скрытого поля с нужными параметрами 
+         <p>
+          <%= f.label :title %> <br> #f.label формирует в браузере тег <label>
+          <%= f.text_field :title %> #f.label формирует в браузере тег <input>
+        </p>
+         <p>
+          <%= f.submit %>
+        </p>
+      <% end %>
+   
+ 
+      
