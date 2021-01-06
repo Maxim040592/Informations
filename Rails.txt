@@ -53,9 +53,15 @@
           params.require(:article).permit(:title, :text)
         end
       end
-    
+  
+   ***Команды sqlite3
+      - .tables - список таблиц
+      - .mode column - формирует колоник (отступы)
+      - .headers on - включает заголовки
+      - pragma table_info(table_name) - отображает поля и их типы
+  
   ***Команды Rails
-      - render action: 'edit' - перенаправит на страницу edit
+      - render action: 'edit' - перенаправит на страницу edit без потери значения переменой (если такая есть в данном action)
       - redirect_to @article - перенаправление по нужному пути в REST, где @article это @article = Article.new(article_params) т.е сущность полученнная с переданными параметрами из мтода article_params описанный в private
       - @article.save - сохранение в БД
       - @article.update(article_params) - обновление в БД по переданым параметрам из private метода article_params
@@ -67,7 +73,12 @@
             #создаст ссылку 'Edit_article' с переходом на страницу arcticles(статьи)/id/edit по ее id. 
             #где article это <% @articles.each do |article|%> т.е элемент массива
             # @articles - переменная содержащая массив Модели Article т.е  @articles = Article.all (код из action index)
-      
+      -  <%= link_to 'Destroy_article', article_path(article), method: :delete, data: {confirm: 'Действительно хотите удалить данную статью?' }%>
+            # создает ссылку на удаление. В данной ссылке сразу прописывается метод delete (данный метод формирует rails т.к барузеры знают только GET и POST
+            # data: {confirm: 'Действительно хотите удалить данную статью?' } - выдает диалоговое окно с подтверждением или отменой удаления
+      - rails g model Comment author:string body:text article:references - создание модели в режиме создания отношения свзи(т.е 1 ко многим 1 к 1 и т.д)
+            # article:references - создание поля отношений связи с таблицей article
+            
  ***Каталог views(представления - .html.erb)
  ***предстваление edit.html.erb
       <%= form_for :article, url: article_path(@article), method: :put do |f| %> 
