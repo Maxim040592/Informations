@@ -30,3 +30,8 @@ rake db:migrate - запуск миграции
 
 4 прописать в консоли - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p  (необходимо для разграничения отслеживания изменений в каталогах)
 (P.s возможно не потребуется)
+
+
+***Сайты для разработчиков
+ - Plunker (https://plnkr.co/) - сайт предварительного просмотра результата кода в realtime
+ - https://jsfiddle.net/ - сайт предварительного результата просмотра кода в realtime
