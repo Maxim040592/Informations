@@ -97,10 +97,6 @@
           <%= f.submit %>
         </p>
       <% end %>
-      
- ***Принужительный метод для использования конкретного маршрута
-    - Например маршрут /user/sign_out использует метод DELETE но браузер не знает метод. заменяем его при помощи RAils командой data-method="delete"
-      <a href="/users/sign_in">Войти</a>|<a href="/users/sign_out" data-method="delete">Выйти</a>
   
   ***Console Rails
      Запускается командой rails console
@@ -126,3 +122,27 @@
        - current_user.email
     * Доступ к текущей сессии можно получить так:
        - user_session
+    * Принудительный метод для использования конкретного маршрута
+    - Например маршрут /user/sign_out использует метод DELETE но браузер не знает метод. заменяем его при помощи RAils командой 
+      - для html тега - data-method="delete"
+           Пример <a href="/users/sign_in">Войти</a>|<a href="/users/sign_out" data-method="delete">Выйти</a>
+      - для ruby - method: :delete
+           Пример <%= link_to 'Войти', new_user_session_path %>|<%= link_to 'Выйти', destroy_user_session_path, method: :delete %>
+            # где new_user_session_path и destroy_user_session_path Хелперы, которые можно посмотеть в маршрутах либо перейдя в браузере на не корректный url
+            
+    * Добавление нужного поля в devise (например username, которого по умолчанию нет devise)
+        1 создаем миграцию - rails g migration add_username
+          - В файле миграции пишем - add_column :users, :username, :string  
+        2 создаем миграцию add_username_index - в которой прописывается свойство таблицы index (позволяющая сокращать время на обработку по полю - в нашем случае username) 
+         - rails g migration add_username_index
+         - В файле миграции пишем - add_index :users, :username, unique: true
+        3 делаем миграцию - rake db:migrate
+        4 В главном контроллере ApplicationController прописываем 
+             before_action :configure_permited_parameters, if: :devise_controller?
+             
+              private
+                def configure_permited_parameters
+                  devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+                end
+        5 В консоле пишем команду rails g devise:views - для того чтобы создались каталоги уплаения gemom devise
+        
