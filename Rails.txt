@@ -1,4 +1,5 @@
 ***Работа с приложением в Rails***
+*** Все примеры можно посмотреть в репозитории /blog  - https://github.com/Maxim040592/blog.git
  ***После создания нового приложения необходимо создать контроллер и модель приложения
    - rails generate( либо просто g) controller arcticles ( вместо articles может быть что угодно )
    	Далее нужно перейти в контроллер и прописать 
@@ -150,4 +151,43 @@
         
     * Continuous Integration - технология автоматических тестов коммита (т.е когда над проектом работают неклько человек в одном репозитории. то при каждом коммите запускается тест и если ошибка то все об этом узнают)
     * Continuous Delivery - технология автоматичской отравки коммита на web сайт в случае удачного теста Continuous Integration
-        
+    
+   ***Тестирование в Rails (rspec - rails)
+   1 Gemfile
+       group :test, :development do
+          gem 'rspec-rails', '>= 4.0.2'
+          gem 'shoulda-matchers', '~> 4.4', '>= 4.4.1'
+          gem 'factory_girl_rails', '~> 4.9' - основное преимущество тестирования данным гемом в том что нет необходимости обращаться к БД
+       end
+   2 запуск bundle install
+   3 в созданном каталоге spec добавляем в файл rails_helper.rb
+      Shoulda::Matchers.configure do |config|
+       config.integrate do |with|
+       with.test_framework :rspec
+       with.library :rails
+       end
+       end
+       
+       RSpec.configure do |config|
+          config.include FactoryGirl::Syntax::Methods
+        end
+   4 в каталоге spec создаем каталог model (т.е для теста моделей) - внтури создаем файл .rb
+      в данном файле указываем подключаемые ресурсы
+         require "spec_helper"
+         require 'rails_helper'
+      Далее код теста. Например:
+         describe Contact do 
+            it { should validate_presence_of :email } # проверка присутсвия валидации для поля email в модели Contact
+         end
+   5 в каталоге spec создаем каталог factories (т.е для так назывваемых ферм)  - внтури создаем файл .rb 
+      Начальная консрукция файла:
+      FactoryGirl.define do 
+         factory :"название сущности(модели) так же это может быть class" do
+         end
+      end
+      
+     - Для теста методов используется # (сам метод - def subject end )
+         например  
+         describe #subject do 
+             что то тут
+         end
