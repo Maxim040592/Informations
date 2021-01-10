@@ -158,36 +158,71 @@
           gem 'rspec-rails', '>= 4.0.2'
           gem 'shoulda-matchers', '~> 4.4', '>= 4.4.1'
           gem 'factory_girl_rails', '~> 4.9' - основное преимущество тестирования данным гемом в том что нет необходимости обращаться к БД
+          gem 'capybara', '>= 3.26' - тестирование на содержание/функциональность элементов в странице ( использование feature)
+          gem 'database_cleaner' - очистка временной таблицы 
        end
    2 запуск bundle install
-   3 в созданном каталоге spec добавляем в файл rails_helper.rb
+   3 в созданном каталоге spec добавляем в файл rails_helper.rb, а так же раскоммнтировать строчку Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f } для того чтобы файлы из созданного каталога support подгружались в тесты автоматом без require
+      require 'rails_helper'
       Shoulda::Matchers.configure do |config|
        config.integrate do |with|
        with.test_framework :rspec
        with.library :rails
        end
        end
+    4  в созданном каталоге spec добавляем каталог support и помещаем след файлы:
+       - factory_girl.rb
+            RSpec.configure do |config|
+               config.include FactoryGirl::Syntax::Methods
+            end
+       - database_cleaner.rb - для очистки временной таблицы перед каждым тестом
        
-       RSpec.configure do |config|
-          config.include FactoryGirl::Syntax::Methods
-        end
-   4 в каталоге spec создаем каталог model (т.е для теста моделей) - внтури создаем файл .rb
+   5 в каталоге spec создаем каталог model (т.е для теста моделей) - внтури создаем файл .rb
       в данном файле указываем подключаемые ресурсы
-         require "spec_helper"
          require 'rails_helper'
       Далее код теста. Например:
          describe Contact do 
             it { should validate_presence_of :email } # проверка присутсвия валидации для поля email в модели Contact
          end
-   5 в каталоге spec создаем каталог factories (т.е для так назывваемых ферм)  - внтури создаем файл .rb 
+         # где validate_presence_of это так называемые матчеры (matchers)
+         # https://matchers.shoulda.io/docs/v4.4.1/ - ссылка на список матчеров
+         
+   6 в каталоге spec создаем каталог factories (т.е для так назывваемых ферм)  - внтури создаем файл .rb 
       Начальная консрукция файла:
+      require 'rails_helper'
       FactoryGirl.define do 
          factory :"название сущности(модели) так же это может быть class" do
          end
       end
+   7 в каталоге spec создаем каталог featers  - внтури создаем файл .rb
+      # пример наличия текста 'Hello' на странице /contacts
+      require 'rails_helper'
+         feature "Contact Creator" do 
+           scenario "allow acees to contacts page" do
+               visit '/contacts'
+
+               expect(page).to have_content 'Hello'
+           end
+         end
       
      - Для теста методов используется # (сам метод - def subject end )
          например  
          describe #subject do 
              что то тут
          end
+   
+     - i18n (т.е internationalization) - простой и расширяемый фреймворк для перевода вашего приложения на отдельный другой язык, иной чем английский, или для предоставления поддержки многоязычности в вашем приложении. Используется для тестов
+      1 в файле config/locales/en.yml прописываем то что нам необходимо для вставки в представлениях erb
+         например: contacts: #обязательно 2 пробела или один отсуп 
+                     contacts_us: 'Hello'
+      2 в представлении erb вставлем созданный текст: <h1><%= t('contacts.contacts_us') %></h1> - т.е сформируется тег h1 с содержимым Hello
+      3 в тесте как указано в примере 6 заменяем сам текст Hello след образом
+            require 'rails_helper'
+            feature "Contact Creator" do 
+               scenario "allow acees to contacts page" do
+                  visit '/contacts'
+
+                  expect(page).to have_content I18n.t('contacts.contacts_us')
+               end
+            end
+         
