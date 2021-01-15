@@ -226,3 +226,23 @@
                end
             end
          
+***Полиморфные ассоциации используются доспустим когда одной сущности нужно указать несколько других сущностей.
+   Например Есть модель Post , Comment, Image и для модели Comment свзяана сущность Post и Image. т.е комментарии могут быт в постах и в картинках
+   Для этого необходимо сдлелать следующее
+      class Comment < ApplicationRecord
+         belong_to :commntable, polymorphic: true
+      end
+      
+      class Image < ApplicationRecord
+        has_many :comments, as: :commentable
+      end
+      
+      class Post < ApplicationRecord
+        has_many :comments, as: :commentable
+      end
+      
+      и в миграции создании таблицы комментариев добавляем поле:
+       t.references :commentable, polymorphic: true
+     после чего делаем rake db:migrate
+
+   
