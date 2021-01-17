@@ -1,0 +1,42 @@
+***Переменные
+  # обьявление переменных - var,let,const
+   - В случае повторного переопределения переменой через var ошибки не будет, переменная просто переопределится
+   - Лучше использовать let т.к в случае обьявления переменной которая уже имеется js выдаст ошибку об этом (let name = 'Mike';)
+   - Переменную const нельзя переопределить но можно переопределить обект переменной:
+      const nameMike = { name: 'Mike', age: 40};
+      nameMike.name = 'Jon' - в таком случае ошибки не будет
+      nameMike = 'Jon' - будет ошибка
+      
+   # Преобразование типов
+    let valut;
+    //number to string
+      value = string(10);
+      value = (10).to.string();
+    //boolean to string
+      value = string(true);
+    //Array to str
+      value = string([1,2,3]);
+    //Object to str
+      value = string({name: 'Mike'});
+    //Str to Number
+      value = Number('2');
+    //Boolena to Number
+      value = Number(true); - 1
+      value = Number(false); - 0
+      value = Number('false');- NaN
+      value = Number('false'); - NaN
+     //parseInt
+      value = parseInt('200px'); - 200
+     //parseFloat
+      vallue = parseFloat('200.300px); - 200.300
+     //Boolean
+      value = Boolean('hello'); - true
+      value = Boolean(''); - false
+      value = Boolean(' '); - true
+      value = Boolean(100); - true
+      value = Boolean([]); - true
+      
+      
+      
+    
+   
