@@ -44,6 +44,41 @@
     value = Math.floor(2.9); округление в меньшую сторону - 2
     value = Math.min(2,12,3); min
     
+  # Строки
+    const firstName = 'Denis';
+    const lasName = 'Ptrov';
+    const age = 30;
+    const str = 'Hi my name is Denis';
+    
+    let value;
+    
+    value = firstName.length; - длина строки
+    value = firstName.toUpperCase(); - перевод в верхний регистр
+    value = firstName.concat(' ', lastName); - конкатенация строки
+    value = str.indexof('n'); - вернет первое вхождение индекса в строке
+    value = str.indexof('n', 10); - вернет первое вхождение индекса в строке на начиная с 10 позиции
+    value = str.includes('Denis'); - true or false содержания значения в строке
+    value = str.slice(0, 5); - вырезае символы с 0 позиции 5 символов 
+    value = str.replice('Denis','Den'); - заменит Denis на Den
+    
+  # Шаблонные строки
+    const firstName = 'Denis';
+    const lastName = 'Ptrov';
+    const age = 30;
+    let str;
+    str = `
+      <ul>
+        <li>FirstName: ${firstName}<\li>
+        <li>LastName: ${lastName}<\li>
+        <li>Age: ${age}<\li>
+      </ul>
+    `
+    
+    
+    
+    
+    
+    
       
     
    
