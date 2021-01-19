@@ -73,7 +73,108 @@
         <li>Age: ${age}<\li>
       </ul>
     `
+  # Обьекты
+    const user {
+    firstName: 'Alex',
+    'frend'{
+    country: 'USA',
+    age: 29
+    },
+    age: 30};
     
+    -методы обращения
+      let value;  
+      value = user.firstName;
+      value = user.['firstName'];
+      value = user['frend']; - выведит массв вложенного обьекта frend
+      value = user['frend'].age; - обращение к элементу вложенного обекта frend
+      value = user['frend']['age']; - обращение к элементу вложенного обекта frend
+      user['frend'].city = 'Mayami'; - так как поля city изначально не было обьявленно то таким способом оно создастся автоматом
+      user['frend'].ulica.house = 25; - выдасть ошибку т.к ulica не был нигде не иницаилизирован
+        user['frend'].ulica = {};
+        user['frend'].ulica.house = 25; - в таком случае ошибки не будет
+   
+   # Условные операторы (<;>;<=;>=;!=;!== строгое сравнение; ==; === строгое сравнение; || кажде значение пытается преобразовать к true; && кажде значение пытается преобразовать к false)
+     if 1 == '1' - true т.к неявное сравнение преобразует строку в число
+     if 1 === '1' - false т.к явное сравнение говорит что цифра не равна строке
+     if (Array.isArray(value)) - проверяет что массив это массив, где value это сам массив
+     if (user.hasOwnProperty('name')) - проверит наличие свойства name в объекте user
+     
+     *определяем значение для переменной с помощью ||(или)
+     servername = 'Den';
+     nickname = servername || 'undefine servername'; - т.е присвоится значение Den так как знак || пытается привезти к true а servername у нас true (т.е не пустое значение)
+     
+     value = 1 && 0 && 2 - вернет 0 так как это false а опертор && стремится к первому false
+   
+   # Тернарный оператор.Switch case (Тернарный оператор исп чаще всего для присваоения переменной значения в зависимрсти от условия)
+     //выражение ? если true : если false;
+     обычное условие:
+      if (a>0){ b = a; } else b += 1;
+     применение тернарного оператора: мы в переменную b сразу присваиваем выражание условия
+       b = a > 0 ? a : b + 1; т.е a > 0 ? a говорит о том что если a > 0 и это true то присваивай a; : b + 1 - иначе b + 1;
+       
+      switch (n) {
+        case 'one': какой то код
+        break;
+        default: какой то код (выполняется если ни один case не выполнился)
+      }
+      
+   # Циклы //while; do while; for; for of; for in;
+      let i = 10;
+      while(i--) {
+        что то делаем (выполнится 10 раз и оставновится т.к i станет 0 а 0 это false)
+      }
+      
+      *for in - для обьекта
+       const user = {name: 'Alex', age: 20 };
+       for (let key_is in user) {
+        console.Log(key_is);
+        console.Log(user[key_is]);
+      *for of - для объекта
+        for (let value of user) {
+        console.Log(value);}
+    
+    # Функции
+      1. function declaration - способо обявления
+      function hello(firstName = 'Nik', age = 30){
+       console.Log(user[key_is]);
+       return `Hello ${firstName} ${age}
+      }
+      hello(); - функция вернет Nik 30 т.к не были переданы параметры а установлены в обявлении функции
+      
+      2. function extantion - способ обьявления
+      const gg = function(x){
+       return x * x;
+       };
+      
+      3. Самовызывающаяся ф-я
+        (function(msg) {
+          console.log(msg);
+         })(передаем тут параметр);
+      
+     # Базовые методы массиов
+      - arr.length;
+      - Array.isArray(arr); - являеися ли массив массивом
+      - arr.indexOf(элемент массива); - вернет его индекс
+      - arr.push(10); - добавит в конец массива 10 
+      - arr.pop(); - удалит элемент с конца массива
+      - arr.unshift(10); - добавит в начало массива
+      - arr.shift(10); - удалит с начала массива
+      - arr.slice(0, 2); - вырезает из массива массива
+      - arr.splice(1, 2); - удалит из массива с 1 индекса 2 элемента
+      - arr.reverse(); - переварачивает массив
+      - arr.concat(arr); - конкатенация массива
+      - arr.join() - сливет массив в строку
+      'Hello'.split(" "); - разобьет строку на каждый символ и добавит в массив
+      
+      
+    
+    
+   
+   
+   
+      
+      
     
     
     
