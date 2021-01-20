@@ -166,8 +166,40 @@
       - arr.concat(arr); - конкатенация массива
       - arr.join() - сливет массив в строку
       'Hello'.split(" "); - разобьет строку на каждый символ и добавит в массив
+    
+    # Функции высшего порядка ( принимают в качестве параметра другие функции или возвращают функции)
+     function question(job) 
+     {
+        const jobDictionary = {
+          developer: 'что такое JS',
+          teacher: 'какой предмет вы препадаете
+          };
+
+        return function(name) {
+          return `${name}, ${jobDictionary[job]}?`;
+        };
+     }
+     console.log(question('developer')('Denis')); - выведит Denis, что такое JS?
       
-      
+   # this - контекст вызова функции 
+      function getPrice(){
+        console.log(this.price);
+        return this;
+        }
+
+      function getName(){
+        console.log(this.name);
+        return this;
+      }
+
+      const product = {
+        price: 200,
+        name: 'Kola',
+        getPrice, - функция которая инициализирована выше и в которой указан метод вывода свойства price через контекст this. Так как ф-я описана выше а указана в объекте product то за счет this она имеет доступ к свойству price
+        getName, - аналогично функции getPrice
+      };
+
+      product.getName().getPrice();//цепочный контекст вызова функций
     
     
    
