@@ -220,6 +220,31 @@
     -Возращение объекта:
       const returnObj = (str = '') => ({value: str,lenth: str.length,}); -после стрелки ставятся круглые скобки для того чтобы не выводить результать отдельно в return
     
+   # Перебирающие методы массивов
+    //forEach = перебирает массив ничего не возвращая
+      users.forEach((user,i,arr) => {
+      console.log(user,i,arr);
+      });
+    //filter - возвращает новый массив если переданный  collback вернет true
+      const userLess30 - users.filter(user => user.age < 30);
+      console.log(userLess30);
+    //map - возвращает новый массив если передан  collback
+      const usename = users.map((user) => user.name);
+       console.log(username);
+    //reduce - позволяет преобразовать массив в новую сущность (либо выполнить какую либо ариф операцию)
+      const totlaBalance = users.reduce((acc,user) => (acc += user.balace), 0); - пройдется по массиву и подсчитает сумму баланса всех элементов
+      const useObj = users.reduce((acc,user) => {
+      acc[user._id] = user; 
+      return acc; }, {});
+    //some/every - хотябы один/все элементы удовлетвоют условию
+      const isMan = users.some(user = > user.gender === "man"); - если хотя бы один user по гендеру мужчина
+       const isMan = users.every(user = > user.gender === "man"); - если каждый user по гендеру мужчина
+    //find
+      const user = users.find(user => user.name === 'Den');
+    //sort - изначально сортирует как строки
+      const numArr = [10,7,31,44];
+      numArr.sort((prev,next) => prev - next); - т.е метод работает таким образом что от предидущего отнимается следющий элемент и если больше 0 тогда элемент next ставится перед prev
+      numArr.sort((prevUser,nextUser) => prevUser.age - nextUser.age); - сортировка по возрасту
       
       
     
