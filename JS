@@ -257,7 +257,7 @@
           skils: ['html','css'],
         }};
       let newObj = Object.assign({},obj1,obj2);
-      console.log(newObj === obj2); - в данной случае будет false т.к
+      console.log(newObj === obj2); - в данной случае будет false т.к asign делает не глубокое копирование и не копирует вложенный объект info
     
     
     
