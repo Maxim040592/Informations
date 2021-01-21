@@ -246,7 +246,18 @@
       numArr.sort((prev,next) => prev - next); - т.е метод работает таким образом что от предидущего отнимается следющий элемент и если больше 0 тогда элемент next ставится перед prev
       numArr.sort((prevUser,nextUser) => prevUser.age - nextUser.age); - сортировка по возрасту
       
-      
+   # Методы объектов
+    //неглубокое копирование - object.assign
+      let obj1 = { 
+        name: 'Denis',
+      };
+      let obj2 = { 
+        name: 'Mark',
+        info:{
+          skils: ['html','css'],
+        }};
+      let newObj = Object.assign({},obj1,obj2);
+      console.log(newObj === obj2); - в данной случае будет false т.к
     
     
     
