@@ -258,8 +258,36 @@
         }};
       let newObj = Object.assign({},obj1,obj2);
       console.log(newObj === obj2); - в данной случае будет false т.к asign делает не глубокое копирование и не копирует вложенный объект info
+    //глубокое копирование - для этого вначвле переводим в JSON формат
+      newObj = JSON.parse(JSON.stringify(obj1));
+        * JSON.stringify(obj1) - конвертация в JSON формат
+        * JSON.parse - парсим обратно в объект конвертированный формат JSON
+    //Получить ключи обектов
+      let keys = Object.keys(obj1);
+    //Получить значения объектов
+      let values = Object.values(obj1);
+    //Получить массив массивов
+      let entries = Object.entries(obj1);
+    //Из массива ключей и значений делает объект
+      let fromEntries = Object.fromEntries([['a','value'],['b','value']]); - результат {a: 'value', b: 'values'}
     
-    
+    # Деструктуризация - позволяет разбить сложыне структуры на более простые
+      //вытащим свойства объекта в обдну строку
+      const user = { firstName: 'Den', lastName: 'Ivanov', age: 20};
+      const {firtName, lastName, age = 40} = user;
+      conslole.log(age) - результат будет 20 т.к если мы казали свойсто в объекте то оно в приоритете
+      
+      const {firtName, lastName, age = 40, country = 'USA'} = user;.
+      conslole.log(country); - ошибки не будет и выведит USA не смотря на то что в объекте нет этого свойтсва. с помощью деструктуризации мы создали это свойство
+      
+      const {firtName: name, lastName, age = 40} = user;
+      conslole.log(name); - заменили имя свойства firstName на name
+      
+      //деструк-я массивов
+      const colos = ['white','black'];
+      const [w,b] = colors; - т.е переменным присвоили по порядку значения массива (т.е важен порядок)
+      console.log(w,b); - white black
+      
     
     
     
