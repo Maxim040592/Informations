@@ -284,12 +284,53 @@
       conslole.log(name); - заменили имя свойства firstName на name
       
       //деструк-я массивов
-      const colos = ['white','black'];
+      const colors = ['white','black'];
       const [w,b] = colors; - т.е переменным присвоили по порядку значения массива (т.е важен порядок)
       console.log(w,b); - white black
       
+      const nn = ['helo',['no','yes']];  - деструк-я вложенных массивов
+      const [,[n,y]]; - запятая говорит о том что пропускаем первый элемент массива
+      console.log(n,y); - no yes
+      
+      const colos = ['white','black','green'];
+      const [w,...other_colors] = colors; - т.е копируем первый элемент массива в переменную w, затем ставятся троеточие и какая нибудь переменная (это означает что в эту перенную попадет остаток от массива)
+      console.log(w,other_colos); - white black green
+      
+      const colos = ['white','black','green'];
+      const [...other_colors] = colors; - полное не глубокое копирование массива
+      
+      const names = ['Ivan', 'Misha'];
+      const colorsNames = [...colors, ...names]; - cклейка массивов (некая конкатенация)
+      
+      //деструк-я функции с передачей параметров
+        function myPerson({lastName,firstName}){
+          console.log(lastName,firstName);
+        }
+        myPerson(user);
+      //деструк-я функции без передачи параметров
+        function myPerson({lastName = 'сюда пишем что то по умолчанию',firstName = 'сюда пишем что то по умолчанию'} = {}){
+          console.log(lastName,firstName);
+        }
+        myPerson();
     
-    
+    # DOM (document object do model)
+     const div = document.querySelector('div');
+     const title = document.querySelectorAll('h1');
+     
+    # Работа с атрибутами
+      //покажет прямого родителя первого элемента div - console.log(div.parentElemnt);  
+      //добавим класс для элемента div - div.classList.add('article', 'custom'); console.log(div.classList);
+      //удалить класс элемента div -  div.classList.remove('article');
+      //проверить наличие нужного класса - div.classList.contains('custom'); - true or false
+      //позволяет переключать класс - div.classList.toggle('custom'); - если класса нет то он его создаст если есть то удалит
+      //Установить атрибут - div.setAttribute('id','my_id');
+      //получить аттрибут - div.getAttribute('id');
+      //проверить наличие - div.hasAttribute('id');
+      //удалить атрибут - div.removeAttribute('id');
+        
+       
+       
+      
     
       
     
