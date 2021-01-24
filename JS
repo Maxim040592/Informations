@@ -327,11 +327,80 @@
       //получить аттрибут - div.getAttribute('id');
       //проверить наличие - div.hasAttribute('id');
       //удалить атрибут - div.removeAttribute('id');
+    
+    # Манипуляция DOM
+      const title = document.querySelector('h1');
+      title.innerHTML = "" - h1 станет пустым
+      title.textContent = 'new text'; - меняется содержиое тега
+      title.insertAdjacentHTML("beforebegin",'<h2>title</h2>'); - вставляет строку где "beforebegin" указывает на то что строка вставится перед нужным объектом. "afaterbegin" - после нужного объекта
+      //создание элемента
+        const span = document.createElement('span'); - создали тег span (но не на разметке страницы а только в JS)
+        span.textcontenet = 'blabla';
+        title.appendChild(span); - добавили тег span в тег h1 (т.е производится создание элемента в разметке стр)
+        div.appendChild(span); - в таком случае добавится только в тег div а из тега h1 удалится потомучто добавлением DOM узеол может быть только в одном экземпляре
+      //добавление нескольких элементов одновремено (вначале необходимо все завернуть в fragment)
+        const fragment = document.createDocumentFragment();
+        const colors = ['green', 'red', 'blue'];
+        colors.forEach(color => {
+          const item = document.createElement('div');
+          item.calsslist.add(`bg-${color}`);
+          item.textContent = color;
+          fragment.appendChield(item);
+          });
+        document.body.appendChild(fragment); - добавление всего на разметку разом.
+     
+     # События
+      function clickhandler(e) {
+        e.preventDefault(); - отменяет девофлтное действие для события
+       }
+       link.addEventListener('click', clickhandler); - т.е для ссылки определяем событие click при котором блягодаря функции отменяется дефотноый переход на какую либо страницу 
+      //Динамическое создание элементов
+        const = document.querySelector('.container'); - находим элемент с названием .container (т.е div)
+        btn.addEventListener('click', e => {
+        const div = document.createElement('div'); - создаем элемент
+        div.textContent = Math.random(); - заполняем элемент содержиммым 
+        container.appendChild(div);
+        });
+      //Oбработчик для созданных динамических элементов
+        container.addEventListener('click', e =>{
+        if (e.target.targenName === 'DIV') { //если элемент имеет имя DIV (можно посмотреть в свойстве target)
+          console.log('div container');
+          }
+         });
+     
+      # Всплытие и погружение (перехват события)
+        * Всплыите - При наступлении события обработчики сначала срабатывают на самом вложенном элементе, затем на его родителе, затем выше и так далее, вверх по цепочке вложенности.
+        <form onclick="alert('form')">FORM
+          <div onclick="alert('div')">DIV
+            <p onclick="alert('p')">P</p>
+          </div>
+        </form>
+       т.е сначала событие элемента <p> и выше
+        * Остановка всплытия - event.stopPropagation();
+         <script>
+          const element = document.querySelector('div');
+
+          element.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
+         </script>
+        * Чтобы поймать событие на стадии перехвата, нужно использовать третий аргумент addEventListener:
+          Если аргумент true, то событие будет перехвачено по дороге вниз.
+          Если аргумент false, то событие будет поймано при всплытии.
+           const element = document.querySelector('div');
+             element.addEventListener('click', (e) => {
+              console.log('clicl.div');
+              },true,
+             );
+    
+      # AJAX - обращение к серверу без перезагрузки страницы - ссылка на урок https://www.youtube.com/watch?v=MSz83YWCecM
+        *GET запрос
+        function getPosts(callback){
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET','пусть откуда будут браться данные');
+        xhr.addEventListener('load', () => {
+          const response = JSON.parse(xhr.responseText); - парсим в массив
+          callback(response);
+        });
         
-       
-       
-      
-    
-      
-    
-   
+        
