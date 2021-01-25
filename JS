@@ -402,5 +402,21 @@
           const response = JSON.parse(xhr.responseText); - парсим в массив
           callback(response);
         });
-        
+     
+      # Pormises - как правило принимает один из мараметров (resolve или reject). В случае если на этой какой то цепочки появляется ошибка то это попадает в обработчик catch
+      const promise = new Promise((resolve, reject) => {
+        setTimeout(() => resolve(Math.random()), 1000);
+       });
+      promise - цепочка вызовов
+      .then(x => {
+        console.log(x);
+        return x;
+       })
+      .then(y => console.log(y))
+      .catch(err => console.log(err));
+      
+      // Promise.all
+      Promise.all([функция1(параметр),функция2(параметр),функция3(параметр)])
+      .then(([какая_то_переменная1,какая_то_переменная2,какая_то_переменная3]) => console.log(какая_то_переменная1,какая_то_переменная2,какая_то_переменная3))
+      .catch(err => console.log(err));
         
