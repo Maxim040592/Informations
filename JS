@@ -419,4 +419,19 @@
       Promise.all([функция1(параметр),функция2(параметр),функция3(параметр)])
       .then(([какая_то_переменная1,какая_то_переменная2,какая_то_переменная3]) => console.log(какая_то_переменная1,какая_то_переменная2,какая_то_переменная3))
       .catch(err => console.log(err));
+      
+     # Fetch - способ создания запросов с использованием promisov
+       function getPost(id){
+       return new Promise((resolve, reject) => {
+         fetch(`url реусурса/${id}`)
+         .then(response => response.json() - 1/ получаем объект от сервера (т.е получим набор свойств и методов) - 2/ тело response преобразуем в json формат
+         .then(post => resolve(post))  получаем само тело ответа от сервера
+         .catch(err => reject(err)); ошибку записываем в reject
+        });
+       
+       getPost(1).then(post => console.log(post)); - вызываем функцию вызова поста с id = 1
+     
+     # Ansync/Await - новый формат ассинхронного кода
+      async function getPost(id) {
         
+      }
